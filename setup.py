@@ -742,7 +742,13 @@ if WITH_CUDA:
     include_dirs.append(tmp_install_path + "/include/THCUNN")
     extra_compile_args += ['-DWITH_CUDA']
     extra_compile_args += ['-DCUDA_LIB_PATH=' + cuda_lib_path]
-    main_libraries += ['cudart', nvtoolext_lib_name]
+
+    # if os.getenv('PYTORCH_BINARY_BUILD'):
+    #     main_libraries += ['cudart_static']
+    # else:
+    main_libraries += ['cudart']
+
+    main_libraries += [nvtoolext_lib_name]
     main_sources += [
         "torch/csrc/cuda/Module.cpp",
         "torch/csrc/cuda/Storage.cpp",
